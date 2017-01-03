@@ -1,0 +1,26 @@
+{
+  "name": "vuejs-chat",
+  "version": "1.0.0",
+  "description": "Real-time chat application using NodeJS, VueJS & Socket.io.",
+  "author": "Aaron Welsh <contact@aaron-welsh.co.uk>",
+  "main" : "server.js",
+  "scripts" : {
+    "start" : "node server.js"
+  },
+  "license": "MIT",
+    "keywords": [
+    "vue",
+    "NodeJS",
+    "Socket.io",
+    "Real-time chat"
+  ],
+  "dependencies": {
+    "express": "latest",
+    "morgan": "latest",
+    "socket.io": "latest"
+  },
+  "bugs": {
+    "url": "https://github.com/aarogrammer/vuejs-chat/issues"
+  }
+}
+  
