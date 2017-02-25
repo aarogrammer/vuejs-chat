@@ -1,6 +1,6 @@
 # Real-time chat application using NodeJS, VueJS & Socket.io
 
-Real-time chat application build on NodeJS with VueJS & Socket.io.  
+Real-time chat application built on NodeJS with VueJS & Socket.io.  
 
 This application simply uses Socket.io to send messages in real-time bidirectional event-based communication. VueJS is used to bind data to the DOM and to easily manipulate the data.  
 This is my first proper VueJS application. If things can be imporved, please submit a pull request!
