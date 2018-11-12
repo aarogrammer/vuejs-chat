@@ -1,25 +1,20 @@
-# Real-time chat application using NodeJS, VueJS & Socket.io
+# VueJS Chat
+
+## Currently being refactored...
 
 Real-time chat application built on NodeJS with VueJS & Socket.io.  
 
-This application simply uses Socket.io to send messages in real-time bidirectional event-based communication. VueJS is used to bind data to the DOM and to easily manipulate the data.  
-This is my first proper VueJS application. If things can be imporved, please submit a pull request!
-I use some ES6 syntax so please use Node 7, or change the syntax.
+This application simply uses Socket.io to send messages in real-time with Socket.io. VueJS is used to bind data to the DOM and to easily manipulate the data.  
+I use some ES6 syntax so please use Node 8, or change the syntax.
 
 
 ## Installation
-1. Clone the repository `git clone https://github.com/aarogrammer/vuejs-chat.git`  
-2. CD in to the directory `CD vuejs-chat`  
-3. Install dependencies `npm install`   
-4. Start application: `npm start` or `node server`  
+1. Clone the repository 
+2. CD in to the directory that was cloned 
+3. Install dependencies `npm i`   
+4. Build your application `npm run build`
+5. Start the application `npm run dev` or `npm start` (depending if you have `nodemon` installed)
 
-## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b branch-name`  
-3. Add files to staging `git add .`  
-4. Commit your changes: `git commit -m 'Here are my changes'`  
-5. Push to the branch: `git push origin branch-name`  
-6. Submit a pull request and I will look at it ASAP.  
 
 ## Author
 Aaron Welsh  
