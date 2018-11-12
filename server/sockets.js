@@ -4,21 +4,21 @@
  * @author Aaron Welsh <contact@aaron-welsh.co.uk>
  * 
  */
-module.exports  = function(io) {
+module.exports  = io => {
     // Handle socket.io connections
-    io.on('connection', function(socket) {
+    io.on('connection', socket => {
 
         //log if user joined
         console.log('a user connected');
-        socket.on('disconnect', function() {
+        socket.on('disconnect', () => {
             //log if user disconnected
             console.log('user disconnected');
         });
 
         // Handle message sent
-        socket.on('listenForMessage', function(message) {
-            console.log('Message: ' + message);
-            io.emit('listenForMessage', message);
+        socket.on('messageEvent', message => {
+            console.log(`Message: ${message}`);
+            io.emit('messageEvent', message);
         });
     });
 };

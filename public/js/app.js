@@ -18,7 +18,7 @@ const vue = new Vue ({
         messages: []
     },
     created: function () {
-            socket.on('listenForMessage', function(message) {
+            socket.on('messageEvent', function(message) {
                 this.messages.push(message);
         }.bind(this));
     },
