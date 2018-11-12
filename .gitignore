@@ -4,3 +4,7 @@
 # NodeJS
 node_modules
 npm-debug.log*
+
+# App specific 
+dist
+build/env.json

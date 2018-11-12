@@ -1,7 +1,6 @@
 /**
- * @version 1.0.0
- * @description Creating a module to break our application up. This module is used to deal with Socket.io, connections and messages. Required in server.js
- * @author Aaron Welsh <contact@aaron-welsh.co.uk>
+ * @description Create an event for socket to listen on.
+ * @author Aaron Welsh
  * 
  */
 module.exports  = io => {
