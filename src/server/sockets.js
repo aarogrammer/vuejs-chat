@@ -16,7 +16,11 @@ module.exports  = io => {
 
         // Handle message sent
         socket.on('messageEvent', message => {
-            console.log(`Message: ${message}`);
+            console.log(message)
+            // console.log(`
+            // Message: ${message.text}
+            // Time: ${message.ts}
+            // `);
             io.emit('messageEvent', message);
         });
     });
