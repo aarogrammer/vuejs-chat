@@ -1,23 +1,22 @@
 <template>
-    <div>
-        <section id="header">
-            <div class="v-center">
-                 <strong id="status"></strong>
-            </div>
-        </section>
-        <section id="main-section">
-            <div>
-
-                <form v-on:submit.prevent="send">
-                    <input v-model="message" type="text" placeholder="Type your message and press enter" />
-                </form>
+    <div class="pure-g">
+        <div id="main-section" class="pure-u-1">
+            <div class="pure-g">
+                <div class="pure-u-1">
+                    <form class="pure-form" v-on:submit.prevent="send">
+                        <fieldset class="pure-group">
+                            <textarea class="pure-input-1-3" v-model="message" v-on:keyup.enter="send" placeholder="Type your message and press enter"></textarea>
+                        </fieldset>
+                        <button type="submit" class="pure-button pure-input-1-5 pure-button-primary">Send</button>
+                    </form>
+                </div>
+               
                 <div id="chat-area">
                     <div class="group-item" v-for="message in messages" :key="message" v-text="message"></div>
                 </div>
             
             </div>
-        </section>
-        <router-link to="/about">About</router-link>
+        </div>
     </div>
 </template>
 <script>
@@ -42,8 +41,9 @@
         },
         methods : {
 
-            send: function() {
+            send: function(event) {
                 // Trying to not overcomplicate this, you should use proper validation.
+                event.preventDefault()
                 if(!this.message == '') {
                     socket.emit('messageEvent', this.message);            
                     this.message = '';
@@ -51,7 +51,7 @@
             },
             connectionStatus: function() {
                 // Handle our socket client, checking their connection to give feedback
-                const input = document.getElementsByTagName('input')[0];
+                const input = document.getElementsByTagName('textarea')[0];
                 const status = document.getElementById('status')
                 socket.on('disconnect', function() {
                     console.log('Unable to connect to the server...');
@@ -72,3 +72,6 @@
     }
     
 </script>
+<style>
+
+</style>
