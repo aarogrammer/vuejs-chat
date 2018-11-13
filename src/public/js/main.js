@@ -8,6 +8,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import Axios from 'axios';
+
+const axios = Axios.create({
+    baseURL: '/',
+});
+
+Vue.prototype.$http = axios;
+
 Vue.use(VueRouter);
 
 
