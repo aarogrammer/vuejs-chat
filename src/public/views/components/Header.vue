@@ -1,9 +1,9 @@
 <template>
     <div>
-        <header id="header">
+        <header id="header" class="main-header">
             <div class="pure-g">
                 <div class="pure-u-1">
-                    <strong id="status"></strong>
+                    <h1>VueJS Chat</h1>
                 </div>
             </div>
         </header>
@@ -21,3 +21,13 @@
         }
     }
 </script>
+<style>
+    .main-header {
+        background: #42b983;
+        min-height: 10vh;
+        margin: 0 0 2em 0;
+    }
+    .main-header h1 {
+        color: #FFF;
+    }
+</style>
