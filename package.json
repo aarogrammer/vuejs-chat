@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "moment": "^2.22.2",
+    "mongodb": "^3.1.9",
     "socket.io": "^2.1.1",
     "vue": "2.4.2",
     "vue-router": "^2.7.0",

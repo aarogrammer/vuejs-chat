@@ -3,8 +3,8 @@
  * @author Aaron Welsh
  * 
  */
-const path  = require("path");
-const router   = require("express").Router();
+const path      = require("path");
+const router    = require("express").Router();
 
 // Serve home page
 router.get('/', (req, res) => {

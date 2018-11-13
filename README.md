@@ -15,6 +15,12 @@ I use some ES6 syntax so please use Node 8, or change the syntax.
 4. Build your application `npm run build`
 5. Start the application `npm run dev` or `npm start` (depending if you have `nodemon` installed)
 
+## Environment Variables
+
+| Command | Description | Example/More Information |
+| --- | --- | --- |
+| `export VUEJS_CHAT_DATABASE_URL=''` | The URL of your MongoDB instance. | mongodb://localhost:27017/chat |
+| `export database_messages_collection=''` | The name of the collection you want to save and read messages from. | messages |
 
 ## Author
 Aaron Welsh  
