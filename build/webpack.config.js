@@ -5,7 +5,7 @@
  */
 
 const webpack = require('webpack');
-const env = require('./env.json');
+const env = require('./env.js');
 module.exports = {
     entry: '../src/public/js/main.js',
     output: {

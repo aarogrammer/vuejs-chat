@@ -3,6 +3,11 @@
  * @author Aaron Welsh
  * 
  */
+
+const { DatabaseHelper } = require('./models/DatabaseHelper');
+const { database_url, database_messages_collection } = require('../../build/env').database;
+
+const databasehelper = new DatabaseHelper(database_url, database_messages_collection);
 module.exports  = io => {
     // Handle socket.io connections
     io.on('connection', socket => {
@@ -17,11 +22,17 @@ module.exports  = io => {
         // Handle message sent
         socket.on('messageEvent', message => {
             console.log(message)
-            // console.log(`
-            // Message: ${message.text}
-            // Time: ${message.ts}
-            // `);
             io.emit('messageEvent', message);
+            databasehelper.create({
+                text: message.text,
+                ts: message.ts
+            })
+            .then(res => {
+                console.log(`Message saved with ID ${res}`);
+            })
+            .catch(err => {
+                console.error(err);
+            })
         });
     });
 };
