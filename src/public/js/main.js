@@ -4,19 +4,23 @@
  * @author Aaron Welsh
  */
 
-// Import Vue and Vue Loader
+// Core imports
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
 import Axios from 'axios';
+import io from 'socket.io-client';
+import moment from 'moment';
 
 const axios = Axios.create({
     baseURL: '/',
 });
 
-Vue.prototype.$http = axios;
-
 Vue.use(VueRouter);
+
+// Prototypes - Utilities we're probably going to use over many components.
+Vue.prototype.$http = axios;
+Vue.prototype.$io = io;
+Vue.prototype.$moment = moment;
 
 
 import app from '../views/App.vue';
@@ -25,13 +29,12 @@ import About from '../views/About.vue';
 
 // Set up routes with relevant views/components
 const router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         { path: '/', component: Home},
         { path: '/about', component: About}
     ]
 });
-
 
 new Vue({
     el: '#app',
