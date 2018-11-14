@@ -3,7 +3,7 @@
         <div class="pure-u-1">
             <div class="chat-area" id="chat-area">
                 <div class="user-message" v-for="message in messages" :key="message.message">
-                    {{message.text}}
+                    {{message.username}}: {{message.text}}
                     <small id="ts">{{moment(message.ts).fromNow()}}</small>
                 </div>
             </div>
@@ -25,50 +25,53 @@
 </template>
 <script>
 
-    import io from 'socket.io-client';
-    import moment from 'moment';
-    
-    const socket = io();
-
     export default {
+        props: ['userData'],
         mounted: function() {
-            this.connectionStatus();
+            
             this.getMessages();
+            this.connectionStatus();
+            
         },
         created: function() {
-            
-            socket.on('messageEvent', function(message) {
+
+            this.socket.on('messageEvent', function(message) {
                 this.getMessages();
-            }.bind(this));
+            }.bind(this, {query: this.username}));
             
         },
         data () {
             return { 
+
                 message: {
                     text: null,
                     ts: null
                 },
                 messages: [],
-                moment
+                moment: this.$moment,
+                username: this.userData.name,
+                socket: this.$io.connect('', {query: `username=${this.userData.name}`})
+            
             }
         },
-
-        methods : {
+        methods: {
 
             send: function(event) {
 
                 event.preventDefault();
                 if(!this.message.text == '') {
                     const newMessage = {
+                        username: this.username,
                         text: this.message.text,
                         ts: new Date(),
                     };
-                    socket.emit('messageEvent', newMessage); 
+                    this.socket.emit('messageEvent', newMessage); 
                     this.message.text = '';
                 }
-                
+
             },
             getMessages: async function() {
+
                 try {
                     const axios = await this.$http.get('/api/messages');
                     this.messages = axios.data;
@@ -76,27 +79,30 @@
                 } catch (err) {
                     console.error(this.$http, `Err: ${ err }`);
                 }
+
             },
             connectionStatus: function() {
+
                 // Handle our socket client, checking their connection to give feedback
                 const input = document.getElementById('message-textarea');
                 const status = document.getElementById('status');
                 const indicator = document.getElementById('indicator');
                 const offlineMessage = 'The application has went offline. Trying to reconnect...';
 
-                socket.on('disconnect', () => {
+                this.socket.on('disconnect', () => {
                     input.disabled = true;
                     input.setAttribute('placeholder', offlineMessage);
                     status.innerText = offlineMessage;
                     indicator.style.background = '#dc3545';
                 });
 
-                socket.on('connect', () => {
+                this.socket.on('connect', () => {
                     input.disabled = false;
                     input.setAttribute('placeholder', 'Type your message and press enter');
                     status.innerText = 'Online';
-                    indicator.style.background = '#42b983'
+                    indicator.style.background = '#42b983';
                 });
+
             }
 
         }

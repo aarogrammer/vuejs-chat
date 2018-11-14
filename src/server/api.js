@@ -18,6 +18,7 @@ router.get('/messages', (req, res) => {
         // Iterate through returned object and display only what we need.
         data.forEach(item => {
             output.push({
+                username: item.username,
                 text: item.text,
                 ts: item.ts
             });

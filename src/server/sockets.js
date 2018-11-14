@@ -12,18 +12,25 @@ module.exports  = io => {
     // Handle socket.io connections
     io.on('connection', socket => {
 
-        //log if user joined
-        console.log('a user connected');
+        // Connected username that was passed from the client.
+        const username = socket.handshake.query.username;
+        console.log(`🚪 ${username} connected`);
+
         socket.on('disconnect', () => {
             //log if user disconnected
-            console.log('user disconnected');
+            console.log(`❌ ${username} disconnected`);
         });
 
         // Handle message sent
         socket.on('messageEvent', message => {
-            console.log(message)
+            console.log(`💬 ${message.username}: ${message.text}`)
+            
+            // Send message to all connected clients.
             io.emit('messageEvent', message);
+
+            // Save message to MongoDB.
             databasehelper.create({
+                username: message.username,
                 text: message.text,
                 ts: message.ts
             })
@@ -32,7 +39,7 @@ module.exports  = io => {
             })
             .catch(err => {
                 console.error(err);
-            })
+            });
         });
     });
 };
