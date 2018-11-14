@@ -9,6 +9,7 @@ const { database_url, database_messages_collection } = require('../../build/env'
 
 const databasehelper = new DatabaseHelper(database_url, database_messages_collection);
 module.exports  = io => {
+    const userList = [];
     // Handle socket.io connections
     io.on('connection', socket => {
 
@@ -16,6 +17,8 @@ module.exports  = io => {
         const username = socket.handshake.query.username;
         console.log(`🚪 ${username} connected`);
         socket.broadcast.emit('connectedUser', username);
+        userList.push(username);
+        io.emit('connectedUserList', userList);
 
 
         socket.on('disconnect', () => {
@@ -23,6 +26,10 @@ module.exports  = io => {
             console.log(`❌ ${username} disconnected`);
             socket.broadcast.emit('disconnectedUser', username);
 
+            const index = userList.indexOf(username);
+            if (index !== -1) userList.splice(index, 1);
+            io.emit('connectedUserList', userList);
+        
         });
 
         // Handle message sent

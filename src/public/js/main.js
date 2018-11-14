@@ -7,6 +7,7 @@
 // Core imports
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 import Axios from 'axios';
 import io from 'socket.io-client';
 import moment from 'moment';
@@ -15,7 +16,9 @@ const axios = Axios.create({
     baseURL: '/',
 });
 
+// Middleware
 Vue.use(VueRouter);
+Vue.use(Vuex);
 
 // Prototypes - Utilities we're probably going to use over many components.
 Vue.prototype.$http = axios;
@@ -38,6 +41,7 @@ const router = new VueRouter({
 
 new Vue({
     el: '#app',
+    store: require('./store/store').default,
     router,
     render: h => h(app)
 });

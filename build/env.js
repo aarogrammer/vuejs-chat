@@ -1,6 +1,6 @@
 module.exports = {
     app: {
-        mode: "development"
+        mode: 'development'
     },
     database: {
         database_url: process.env.VUEJS_CHAT_DATABASE_URL,

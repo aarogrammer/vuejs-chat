@@ -1,5 +1,6 @@
 <template>
     <div class="pure-g">
+        
         <div class="pure-u-1">
             <div class="chat-area" id="chat-area">
                 <div class="user-message" v-for="message in messages" :key="message.message">
@@ -8,18 +9,31 @@
                 </div>
             </div>
         </div>
+
         <div class="pure-u-1">
+            
             <div>
+
                 <div class="indicator" id="indicator"></div>
                 <strong id="status"></strong>
                 <div id="user-connectivity"></div>
+
+                <div class="online-users">
+                    <h2>Connected Users</h2>
+                    <div v-for="user in userList" :key="user">
+                        <strong>{{user}}</strong>
+                    </div>
+                </div>
+
             </div>
+
             <form class="pure-form" v-on:submit.prevent="send" id="message-form">
                 <fieldset class="pure-group">
                     <input type="text" class="pure-input-1-3" id="message-textarea" v-model="message.text" v-on:keyup.enter="send" placeholder="Type your message and press enter" />
                 </fieldset>
                 <button type="submit" class="pure-button pure-input-1-5 pure-button-primary">Send</button>
             </form>
+
         </div>
         
     </div>
@@ -37,7 +51,6 @@
         },
         data () {
             return { 
-
                 message: {
                     text: null,
                     ts: null
@@ -46,7 +59,11 @@
                 moment: this.$moment,
                 username: this.userData.name,
                 socket: this.$io.connect('', {query: `username=${this.userData.name}`})
-            
+            }
+        },
+        computed: {
+            userList () {
+                return this.$store.getters.getUserList;
             }
         },
         methods: {
@@ -59,18 +76,23 @@
 
                 this.userConnectivity();
 
+                this.socket.on('connectedUserList', (list) => {
+                    this.$store.commit('updateUserList', list);
+                });
+
             },
+   
             userConnectivity: function() {
 
                 const userConnectivityEl = document.getElementById('user-connectivity');
                 this.socket.on('connectedUser', function(user) {
                     userConnectivityEl.innerText = `User ${user} has joined the chat!`;
-                    this.clearUserConnectivity(userConnectivityEl, 5000)
+                    this.clearUserConnectivity(userConnectivityEl, 5000);
                 }.bind(this));
 
                 this.socket.on('disconnectedUser', function(user) {
                     userConnectivityEl.innerText = `User ${user} has left the chat!`;
-                    this.clearUserConnectivity(userConnectivityEl, 5000)                 
+                    this.clearUserConnectivity(userConnectivityEl, 5000);
                 }.bind(this));
 
             },
