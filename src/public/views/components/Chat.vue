@@ -37,7 +37,7 @@
 
             this.socket.on('messageEvent', function(message) {
                 this.getMessages();
-            }.bind(this, {query: this.username}));
+            }.bind(this));
             
         },
         data () {
