@@ -15,10 +15,14 @@ module.exports  = io => {
         // Connected username that was passed from the client.
         const username = socket.handshake.query.username;
         console.log(`🚪 ${username} connected`);
+        socket.broadcast.emit('connectedUser', username);
+
 
         socket.on('disconnect', () => {
             //log if user disconnected
             console.log(`❌ ${username} disconnected`);
+            socket.broadcast.emit('disconnectedUser', username);
+
         });
 
         // Handle message sent

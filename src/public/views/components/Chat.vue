@@ -12,6 +12,7 @@
             <div>
                 <div class="indicator" id="indicator"></div>
                 <strong id="status"></strong>
+                <div id="user-connectivity"></div>
             </div>
             <form class="pure-form" v-on:submit.prevent="send" id="message-form">
                 <fieldset class="pure-group">
@@ -31,13 +32,7 @@
             
             this.getMessages();
             this.connectionStatus();
-            
-        },
-        created: function() {
-
-            this.socket.on('messageEvent', function(message) {
-                this.getMessages();
-            }.bind(this));
+            this.socketEvents();
             
         },
         data () {
@@ -56,6 +51,34 @@
         },
         methods: {
 
+            socketEvents: function() {
+
+                this.socket.on('messageEvent', function(message) {
+                    this.getMessages();
+                }.bind(this));
+
+                this.userConnectivity();
+
+            },
+            userConnectivity: function() {
+
+                const userConnectivityEl = document.getElementById('user-connectivity');
+                this.socket.on('connectedUser', function(user) {
+                    userConnectivityEl.innerText = `User ${user} has joined the chat!`;
+                    this.clearUserConnectivity(userConnectivityEl, 5000)
+                }.bind(this));
+
+                this.socket.on('disconnectedUser', function(user) {
+                    userConnectivityEl.innerText = `User ${user} has left the chat!`;
+                    this.clearUserConnectivity(userConnectivityEl, 5000)                 
+                }.bind(this));
+
+            },
+            clearUserConnectivity: function(el, time) {
+                setTimeout(() => {
+                    el.innerText = '';
+                }, time);
+            },
             send: function(event) {
 
                 event.preventDefault();
