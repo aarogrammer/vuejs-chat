@@ -2,9 +2,9 @@
 
 ## Currently being refactored...
 
-Real-time chat application built on NodeJS with VueJS & Socket.io.  
+Real-time chat application built with Node.js, VueJS & Socket.io.  
 
-This application simply uses Socket.io to send messages in real-time with Socket.io. VueJS is used to bind data to the DOM and to easily manipulate the data.  
+This application uses Socket.io to send messages in real-time. VueJS is used to bind data to the DOM and to easily manipulate the data.  
 I use some ES6 syntax so please use Node 8, or change the syntax.
 
 
