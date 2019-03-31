@@ -5,26 +5,53 @@
  */
 
 const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const env = require('./env.js');
 module.exports = {
+    mode: 'development',
+    plugins: [
+        new VueLoaderPlugin()
+    ],
     entry: '../src/public/js/main.js',
     output: {
         filename: '../dist/js/bundle.js'
     },
+
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['env']
-                }
+                test: /\.js$/, // include .js files
+                exclude: /node_modules/, // exclude any and all files in the node_modules folder
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            [
+                                "@babel/preset-env", {
+                                    targets: {
+                                      "node": "current"
+                                    }
+                                  }
+                            ]
+                        ]
+                    }
+                },
+
             },
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                exclude: /node_modules/, // exclude any and all files in the node_modules folder
+                use: {
+                    loader: "vue-loader"
+                }
             },
+            {
+                test: /\.css$/,
+                use: [
+                  'vue-style-loader',
+                  'css-loader'
+                ]
+            }
         ]
     },
 
@@ -34,22 +61,3 @@ module.exports = {
         }
     }
 };
-if (env.app.mode === 'production') {
-    module.exports.devtool = '#source-map';
-    module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        })
-    ])
-}

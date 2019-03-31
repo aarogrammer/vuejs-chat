@@ -11,8 +11,7 @@ const port      = process.env.port | 8080;
 const routes    = require('./src/server/routes');
 const api       = require('./src/server/api');
 
-app.use("/dist", express.static('dist')); // Server static files
-
+app.use("/dist", express.static('./build/dist')); // Server static files
 require('./src/server/sockets.js')(io);
 
 app.use('/', routes);
